@@ -152,3 +152,90 @@ int main() {
 }
 ```
 
+### ヌルポインタ
+どの変数も指していない特別なアドレスのことを `Null Pointer` という。
+
+```cpp
+int* ptr = 0;   // ヌルポインタで初期化
+
+ptr = nullptr;  // ヌルポインタリテラルを代入
+```
+
+このアドレスを参照しようとするとエラーが起きる。
+
+```cpp
+int* ptr = nullptr;
+*ptr = 42;  // ヌル参照
+```
+
+コンパイルは通るが、実行時に、Segmentation faultが発生する。
+
+`Null Pointer`かを判定するには次のようにする。
+
+
+```cpp
+int ptr = nullptr;
+
+if (ptr == nullptr) {
+    std:cout << "Null Pointer" << std::endl;
+}
+else {
+    *ptr = 42;
+}
+```
+
+
+### 型変換
+**aキャスト演算子**
+
+C++にはキャスト演算子ふぁ5つあるが、最もシンプルなのは、 `static_cast<target-type>(expression)`
+
+```cpp
+char c = 99;
+std::cout << static_cast<int>(c) << std::endl;
+```
+
+
+## 配列
+
+```cpp
+int a[] = {0, 1, 2, 3, 4};
+int b[5] = a;   // エラー。配列を使って初期化できない。配列の代入もできない。
+
+
+// OK
+int c[5] = {a[0], a[1], a[2], a[3], a[4]};
+```
+
+
+## ループ
+### 範囲for文
+
+```cpp
+for (type variable : range) {
+    ...
+}
+```
+
+例
+
+```cpp
+int value[] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+
+for (int elem : value) {
+    if (elem < 0) {
+        std::cout << "AAA" << std::endl;
+        continue;
+    }
+}
+```
+
+### do文
+本体の実行を行なったのちに、初めて条件式で判断が起こる。
+
+```cpp
+do {
+    // statements ...
+} while (condition);
+```
+
