@@ -71,3 +71,51 @@ Category cat = Category::Value2;
 
 static_cast<int>(cat);  // enumは、こうやらないとエラーが出る。
 ```
+
+
+## クラス
+
+### アクセス演算子
+データや処理には、他の処理から使われるためのものと、クラス内の他の処理で使う為のものとがある。
+内部処理の用のデータが外部からアクセスできると問題が発生するかもしれない。  
+アクセス制御する為の演算子が **アクセス指定子** 
+
+C++のクラスでは、デフォルトで全てのメンバ変数・関数が外部からアクセスできない *private* になっている。  
+後悔するには、明示的に指定する必要がある。
+
+
+```cpp
+class ClassName {
+public:
+    // 公開するメンバ変数・関数
+
+private:
+    // 非公開なメンバ変数・関数
+};
+```
+
+
+### メンバ関数
+
+```cpp
+class ClassName {
+    ReturnType member-function-name(params, ...);
+};
+
+
+
+ReturnType member-function-name(params, ...) {
+    body
+};
+
+
+// ...
+
+instance.member-function-name(args, ...);
+// インスタンスへのポインタ経由でのメンバ関数呼び出し
+pointer->member-function-name(args, ...);
+```
+
+
+`class` の定義でメンバ関数の名前だけ定義しているのは、プロトタイプ宣言的なもの？  
+
