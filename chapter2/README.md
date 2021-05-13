@@ -23,3 +23,51 @@ union NAME {
     ...
 };
 ```
+
+### 列挙体
+「列挙体が取り得る値を列挙しておき、そのうちいずれかの値を持っている」変数を作る為の型
+
+```cpp
+enum class EnumName {
+    item1,
+    item2 = value,
+    ...
+};
+```
+
+値を取得するには、 **スコープ解決演算子** を使う。
+
+例)
+```cpp
+EnumName::item;
+```
+
+
+列挙体が扱える整数の範囲を指定するには以下のようにする。
+
+
+```cpp
+enum class EnumName : UnderlyingType {
+    item1,
+    item2 = value,
+    ...
+};
+```
+
+`UnderlyingType` は `enum` で扱うベースとなる整数型を指定する。
+利用できるには、組み込むの整数型のみ。
+
+`char` 型は 1バイトであることが決まっているので以下のようなことができる。
+
+```cpp
+enum class Category : char {
+    Value1,
+    Value2,
+    Value3 = 100,
+    Value4,
+};
+
+Category cat = Category::Value2;
+
+static_cast<int>(cat);  // enumは、こうやらないとエラーが出る。
+```
