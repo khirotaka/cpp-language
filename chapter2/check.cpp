@@ -80,7 +80,6 @@ int main() {
     std::cin >> tmp;
     vec.set_z(tmp);
 
-
     std::cout << "x: " << vec.get_x() << std::endl;
     std::cout << "y: " << vec.get_y() << std::endl;
     std::cout << "z: " << vec.get_z() << std::endl;
@@ -90,7 +89,5 @@ int main() {
     std::cout << "x: " << vec2.get_x() << std::endl;
     std::cout << "y: " << vec2.get_y() << std::endl;
     std::cout << "z: " << vec2.get_z() << std::endl;
-
-
 }
 
