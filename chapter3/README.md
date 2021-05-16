@@ -172,3 +172,32 @@ int main() {
     A y(42);    // OK
 };
 ```
+
+## デフォルトの初期値
+Pythonでいう
+
+```python
+class A:
+    def __init__(self):
+        self.a = 0
+```
+
+ってやってるだけ。
+
+
+### メンバ変数の初期値
+メンバ変数のデフォルト値を指定するには次の方法がある。
+この公文は、**非静的メンバ変数の初期化子** (Non Static Data Member Initializer: NSDMI) という名称が付いている。
+
+```cpp
+class ClassName {
+    TypeName variable = default;
+    TypeName variable = { default };
+    TypeName variable(default);
+    TypeName variable{default};
+};
+```
+
+### メンバ初期化リストと初期値
+NSDMIとコンストラクタのメンバ初期化リストの両方がある場合、コンストラクタで指定した初期値の方を使って初期化される。 
+
