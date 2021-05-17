@@ -201,3 +201,96 @@ class ClassName {
 ### メンバ初期化リストと初期値
 NSDMIとコンストラクタのメンバ初期化リストの両方がある場合、コンストラクタで指定した初期値の方を使って初期化される。 
 
+
+## 継承
+Pythonでいう
+
+```python
+class DerivedClass(BaseClass):
+    ...
+```
+
+は、
+
+```cpp
+class DerivedClass : AccessSpecifier BaseClass {
+    ...
+};
+```
+
+`AccessSpecifier` は、継承クラスが `public` で公開しているメンバを派生クラスでも `public` で公開する意味。
+
+### オーバライド
+存在する機能の「処理内容」を変えるには、 **オーバライド**する。しかし、なんでもオーバライド できるわけではなく、
+基底クラス定義時に、「派生クラスで変更可能」という宣言をしておく必要がある。この宣言がなされたメンバ関数のことを**仮想関数**
+と呼ぶ。  
+なお、**オーバライド** するには、 `override` 指定子をつける。な、**オーバライド** はあくまで処理だけを書き換えられる。引数は変更できない。
+
+```cpp
+class BaseClass {
+    public:
+        virtual ReturnType function(params, ...);
+};
+
+ReturnType BaseClass::function(params, ...) {
+    // virtualは書かない
+}
+
+class DerivedClass : public BaseClass {
+    public:
+        ReturnType function(params, ...) override {
+            // 仮想関数のオーバライド
+        }
+};
+
+ReturnType DerivedClass::function(params, ...) {
+    body;
+}
+```
+
+なお、基底クラスで `virtual` 指定しておけば、派生クラスで`override`指定子を省略してもオーバライドできる。
+しかし、開発しているうちに基底クラスのメンバ関数の仕様が変更された場合、メンバ関数が仮想関数で無くなったりすることも考えられる。
+このような、ミスを回避するために、オーバライドするつもりのメンバ関数に `override` と指定することで、もし規定クラスから無くなっていた場合でも、
+エラーを出してくれる。意識的にこの`override` 指定子をつけた方が良い。
+
+### 名前の隠蔽
+基底クラスが持っているメンバ関数と同じ名前のメンバ関数を派生クラスに追加すると、発生する。
+これが起こると、基底クラスのメンバ関数を呼ぶことができなくなる。
+名前の隠蔽は、派生クラスでオーバライドを追加しようとした時に起こる。
+
+こういった場合、 `using` 宣言を使うと、基底クラスのメンバ関数をオーバロードとして追加できる。
+
+```cpp
+class ClassName : AccessSpecifier BaseClass {
+    public:
+        using BaseClass::member_func;
+};
+```
+
+型名に別名をつける際に利用した `using` 宣言とは別物。
+
+### 純粋仮想関数と抽象クラス
+規定クラスでは宣言のみで、処理内容がなく、派生クラスが必ずオーバライドして処理を書くように強制させる **純粋仮想関数** がある。
+PyTorch の `torch.nn.Module` (?)
+
+```cpp
+class ClassName {
+    public:
+        virtual ReturnType function(params, ...) = 0;   // 純粋仮想関数
+};
+```
+
+#### 純粋クラス
+純粋仮想関数が宣言されたクラスは **抽象クラス** と呼ばれる。
+
+```cpp
+class AbstractClass {
+    public:
+        virtual void foo() = 0;
+};
+```
+
+Javaの `Interface` や Swiftの `Protocol` の真似するためにこの抽象クラスを使うのは、
+パフォーマンスの面からみてあまり好ましくない。
+
+
